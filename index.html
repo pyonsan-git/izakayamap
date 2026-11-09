@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>今すぐ入れる居酒屋・焼き鳥ナビ</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #f59e0b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --green: #10b981;
+      --red: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; padding: 16px; display: flex; flex-direction: column; align-items: center; }
+    .container { width: 100%; max-width: 460px; display: flex; flex-direction: column; gap: 14px; }
+    header { text-align: center; margin-bottom: 4px; }
+    header h1 { font-size: 1.35rem; color: #fbbf24; font-weight: 700; }
+    header p { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+
+    /* 操作バー */
+    .action-box { display: flex; flex-direction: column; gap: 10px; background: var(--card-bg); border-radius: 14px; padding: 14px; border: 1px solid #334155; }
+    .loc-btn { background: linear-gradient(135deg, #d97706, #b45309); border: none; border-radius: 10px; color: #fff; font-size: 0.95rem; font-weight: 600; padding: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .status-text { font-size: 0.78rem; color: #cbd5e1; text-align: center; }
+
+    /* フィルタータブ */
+    .filter-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
+    .tab-btn { background: #334155; border: none; border-radius: 8px; color: #cbd5e1; font-size: 0.78rem; padding: 8px 12px; white-space: nowrap; cursor: pointer; }
+    .tab-btn.active { background: #f59e0b; color: #0f172a; font-weight: 700; }
+
+    /* リスト */
+    .list-container { display: flex; flex-direction: column; gap: 12px; }
+    .shop-card { background: var(--card-bg); border-radius: 14px; padding: 16px; border: 1px solid #334155; display: flex; flex-direction: column; gap: 8px; }
+    .shop-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .shop-name { font-size: 1.05rem; font-weight: 700; color: #fff; }
+    .badge { font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+    .badge-open { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+    .badge-closed { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+
+    .shop-genre { font-size: 0.78rem; color: #38bdf8; }
+    .shop-detail { font-size: 0.8rem; color: #cbd5e1; line-height: 1.4; }
+    .shop-meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+    .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+    .btn-link { text-decoration: none; text-align: center; padding: 9px 0; font-size: 0.8rem; font-weight: 600; border-radius: 8px; border: 1px solid transparent; }
+    .btn-map { background: #2563eb; color: #fff; }
+    .btn-tel { background: #0f172a; border-color: #475569; color: #cbd5e1; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🍶 今すぐ入れる居酒屋・焼き鳥ナビ</h1>
+      <p>現在地から近い「今営業中」のお店をピックアップ</p>
+    </header>
+
+    <div class="action-box">
+      <button id="getLocBtn" class="loc-btn">📍 現在地から近い順に並べる</button>
+      <div id="statusMsg" class="status-text">池田駅周辺の基準位置で表示中</div>
+      <div class="filter-tabs">
+        <button class="tab-btn active" data-filter="all">すべて</button>
+        <button class="tab-btn" data-filter="open">今営業中のみ</button>
+        <button class="tab-btn" data-filter="yakitori">焼き鳥・串</button>
+        <button class="tab-btn" data-filter="sake">海鮮・地酒</button>
+      
